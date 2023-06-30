@@ -7,5 +7,17 @@ def index(request):
 def quienSomos(request):
     return render(request, "about.html")
 
-def register(request):
+def registro(request):
     return render(request, "register.html")
+
+def catalInal (request):
+    return render(request, "main-inal.html")
+
+def catalElec (request):
+    return render(request, "main-elec.html")
+
+def catalAcce (request):
+    return render(request, "main-acceso.html")
+
+def carrito(request):
+    return render(request, "shop.html")

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <h1>Inicia sesión</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+<style>
+    h1{
+        font-family:sans-serif ;
+    }
+    div{
+        text-align: center;
+        display: block;
+        font-family: serif;
+        padding:30vh;
+    }
+    
+
+</style>
+</body>
+</html>
