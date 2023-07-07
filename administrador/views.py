@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Tipo, Producto
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.core.paginator import Paginator
+from django.http import Http404
 # Create your views here.
 @login_required
 def menu (request):
@@ -17,6 +20,12 @@ def inicio (request):
 
 def lista_productos(request):
     lista_productos = Producto.objects.raw("SELECT * FROM administrador_Producto")
+    page = request.GET.get('page', 1)
+    try:
+        paginator = Paginator (lista_productos, 5)
+        lista_productos = paginator.page(page)
+    except:
+        raise Http404
     context = {"productos":lista_productos}
     return render(request,'inicioadmin.html',context)
 
@@ -44,24 +53,23 @@ def agregar_productos(request):
             stock           = stock_prod)
 
         objProducto.save()
+        messages.success(request, "Producto Agregado")
         lista_tipo = Tipo.objects.all()
-        context = {"mensaje":"Se guardó el producto","tipos":lista_tipo}
-        return render(request, 'productos_add.html',context)
+        context = {"tipos":lista_tipo}
+        return render(request, 'inicioadmin.html',context)
 
 def eliminar_productos(request,pk):
     
     try:
         producto = Producto.objects.get(id_producto=pk)
-
         producto.delete() #delete en la BD
-        mensaje = "Se eliminó producto"
+        messages.success(request,"Producto Eliminado")
         lista_producto = Producto.objects.all()
-        context={"Producto":lista_producto, "mensaje":mensaje}
+        context={"Producto":lista_producto}
         return render(request,'inicioadmin.html',context)
     except:
-        mensaje = "No se eliminó producto"
         lista_producto = Producto.objects.all()
-        context={"producto":lista_producto, "mensaje":mensaje}
+        context={"producto":lista_producto}
         return render(request,'inicioadmin.html',context)
 
 def buscar_productos(request,pk):
@@ -97,9 +105,10 @@ def actualizar_productos(request):
         objProducto.stock         = stock_prod
         
         objProducto.save() #update en la base de datos
+        messages.success(request, "Producto Actualizado")
         lista_tipo = Tipo.objects.all()
-        context = {"mensaje":"Se actualizó producto","tipos":lista_tipo}
-        return render(request,'productos_edit.html',context)
+        context = {"tipos":lista_tipo}
+        return render(request,'inicioadmin.html',context)
     else:
         lista_Producto = Producto.objects.all()
         context = {"Productos":lista_Producto}
