@@ -16,6 +16,7 @@
     <div class="registro  paginauelemento ">
         <form action="addProd" method="POST" class="form-floating text-center p-5" id="regisForm">
             {% csrf_token %}
+            
             <pre>ID: <input type="text" name="id" class="form-control "></pre>
             <pre>Nombre: <input type="text" name="nombre" class="form-control "></pre>
             <pre>Marca: <input type="text" name="marca" class="form-control"></pre>
