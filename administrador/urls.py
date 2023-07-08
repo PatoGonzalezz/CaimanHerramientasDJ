@@ -8,4 +8,5 @@ urlpatterns=[
     path('findProd/<str:pk>', views.buscar_productos, name='editar_ProductFind'),
     path('editProd', views.actualizar_productos, name="actualizar_productos"),
     path('', views.menu, name='menu'),
+    path('register/', views.register, name="register" )
 ]

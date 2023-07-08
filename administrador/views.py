@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
 # Create your views here.
+def register(request):
+    return render(request,"registration/register.html")
+
 @login_required
 def menu (request):
     request.session["usuario"]="caiman"
@@ -17,6 +20,7 @@ def inicio (request):
     lista_productos = Producto.objects.all()
     context={"productos":lista_productos}
     return  render(request,'inicioadmin.html', context)
+
 
 def lista_productos(request):
     lista_productos = Producto.objects.raw("SELECT * FROM administrador_Producto")
@@ -56,7 +60,7 @@ def agregar_productos(request):
         messages.success(request, "Producto Agregado")
         lista_tipo = Tipo.objects.all()
         context = {"tipos":lista_tipo}
-        return render(request, 'inicioadmin.html',context)
+        return render(request, 'productos_add.html',context)
 
 def eliminar_productos(request,pk):
     
@@ -65,11 +69,11 @@ def eliminar_productos(request,pk):
         producto.delete() #delete en la BD
         messages.success(request,"Producto Eliminado")
         lista_producto = Producto.objects.all()
-        context={"Producto":lista_producto}
+        context={"productos":lista_producto}
         return render(request,'inicioadmin.html',context)
     except:
         lista_producto = Producto.objects.all()
-        context={"producto":lista_producto}
+        context={"productos":lista_producto}
         return render(request,'inicioadmin.html',context)
 
 def buscar_productos(request,pk):
@@ -106,11 +110,12 @@ def actualizar_productos(request):
         
         objProducto.save() #update en la base de datos
         messages.success(request, "Producto Actualizado")
+        lista_Producto = Producto.objects.all()
         lista_tipo = Tipo.objects.all()
-        context = {"tipos":lista_tipo}
+        context = {"tipos":lista_tipo,"productos":lista_Producto}
         return render(request,'inicioadmin.html',context)
     else:
         lista_Producto = Producto.objects.all()
-        context = {"Productos":lista_Producto}
+        context = {"productos":lista_Producto}
         return render(request,'productos_edit.html',context)        
 

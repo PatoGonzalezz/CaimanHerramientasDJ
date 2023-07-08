@@ -21,3 +21,4 @@ def catalAcce (request):
 
 def carrito(request):
     return render(request, "shop.html")
+
