@@ -16,11 +16,11 @@
     <h3 class="">Adminitración Caimán Herramientas</h3>
     <br>
     <br>
-    <div id="idMensajes">
-        {% if mensaje %}
-            {{mensaje}}
-        {% endif %}
-    </div>
+
+    <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-secondary buttonBus" type="submit">Buscar</button>
+    </form>
     <br>
     <table action="{% url 'lista_productos' %}" method="GET" class="table table-dark table-striped" >
         {% if productos %}
