@@ -4,16 +4,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import Http404
+from django.db.models import Q
 # Create your views here.
 def register(request):
     return render(request,"registration/register.html")
 
 @login_required
 def menu (request):
-    request.session["usuario"]="caiman"
+    request.session["usuario"]="pato"
     usuario = request.session["usuario"]
     context = {'usuario':usuario}
-    return render(request, "indexCRUD.html",context)
+    return render(request, "inicioadmin.html",context)
 
 @login_required
 def inicio (request):
@@ -23,7 +24,15 @@ def inicio (request):
 
 
 def lista_productos(request):
+    busqueda = request.GET.get("buscar")
     lista_productos = Producto.objects.raw("SELECT * FROM administrador_Producto")
+
+    if busqueda:
+        lista_productos = Producto.objects.filter(
+            Q(nombre__icontains = busqueda) | 
+            Q(id_producto__icontains = busqueda)
+        ).distinct()
+
     page = request.GET.get('page', 1)
     try:
         paginator = Paginator (lista_productos, 5)

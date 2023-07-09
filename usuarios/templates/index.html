@@ -70,12 +70,13 @@
                                         <a href="{% url 'login' %}" class="navbar-brand bg-body-tertiary link-primary text-opacity-25">Ingresar</a>
                                     {% endif %}
                                 </a>
+                                
                                 <div class="dropdown-menu" >
                                     <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                                 </div>
                             
                         </nav>
-                    
+                    {% if user.is_authenticated %}
                     <nav class="navbar bg-body-tertiary">
                         <div class="container">
                             <a href="{% url 'lista_productos' %}" class="navbar-brand">
@@ -83,6 +84,7 @@
                             </a>
                         </div>
                     </nav>
+                    {% endif %}
                 </div>
             </div>
         </nav>
